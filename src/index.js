@@ -7,7 +7,7 @@ const imgUrl = "https://dog.ceo/api/breeds/image/random/4"
 
 fetch(imgUrl)
     .then(r => r.json())
-    .then(data => renderImages(data.message))
+    .then(imageData => renderImages(imageData.message))
 
 function renderImages(allImages) {
     for (let image in allImages) {
@@ -18,3 +18,23 @@ function renderImages(allImages) {
         imageContainer.appendChild(singleImage)
     }
 }
+
+//challenge 2: fetch all dog breeds and add to provided ul
+const breedUrl = "https://dog.ceo/api/breeds/list/all"
+
+fetch(breedUrl)
+    .then(r => r.json())
+    .then(breedData => {
+        let breeds = Object.keys(breedData.message)
+        renderBreeds(breeds)
+    })
+
+    function renderBreeds(allBreeds) {
+        for (let breed in allBreeds) {
+            const singleBreed = allBreeds[breed]
+            const breedListItem = document.createElement('li')
+            breedListItem.innerText = singleBreed
+            const breedList = document.getElementById('dog-breeds')
+            breedList.append(breedListItem)
+        }
+    }
