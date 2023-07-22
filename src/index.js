@@ -22,24 +22,47 @@ function renderImages(allImages) {
 //challenge 2: fetch all dog breeds and add to provided ul
 const breedUrl = "https://dog.ceo/api/breeds/list/all"
 
+let allBreeds;
+
 fetch(breedUrl)
     .then(r => r.json())
     .then(breedData => {
-        let breeds = Object.keys(breedData.message)
-        renderBreeds(breeds)
+        allBreeds = Object.keys(breedData.message)
+        renderBreeds(allBreeds)
     })
 
-function renderBreeds(allBreeds) {
-    for (let breed in allBreeds) {
-        const singleBreed = allBreeds[breed]
+// challenge 4: filter breeds using the dropdown
+let dropdown = document.getElementById('breed-dropdown')
+dropdown.addEventListener("change", renderBreeds)
+
+function renderBreeds() {
+    const breedList = document.getElementById('dog-breeds')
+    breedList.textContent = ""
+
+    const filteredBreeds = allBreeds.filter(breed => breed.charAt(0) === dropdown.value)
+
+    filteredBreeds.forEach(breed => {
         const breedListItem = document.createElement('li')
-        breedListItem.innerText = singleBreed
-        const breedList = document.getElementById('dog-breeds')
-        breedList.append(breedListItem)
-
-        // challenge 3: when user clicks on li, font color changes
+        breedListItem.innerText = breed
         breedListItem.addEventListener("click", (e) => e.target.style.color = "purple")
-    }
+        breedList.appendChild(breedListItem)
+    })
 }
+// alternative code for challenge 4
 
+// function renderBreeds() {
+//     const breedList = document.getElementById('dog-breeds')
+//     breedList.textContent = ""
+//     for (let breed in allBreeds) {
+//         const singleBreed = allBreeds[breed]
+//         const breedListItem = document.createElement('li')
+//         breedListItem.innerText = singleBreed
 
+//         // challenge 3: when user clicks on li, font color changes
+//         breedListItem.addEventListener("click", (e) => e.target.style.color = "purple")
+
+//         if (breedListItem.innerText.charAt(0) === dropdown.value) {
+//             breedList.appendChild(breedListItem)
+//         }
+//     }
+// }
