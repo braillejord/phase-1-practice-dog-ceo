@@ -29,12 +29,17 @@ fetch(breedUrl)
         renderBreeds(breeds)
     })
 
-    function renderBreeds(allBreeds) {
-        for (let breed in allBreeds) {
-            const singleBreed = allBreeds[breed]
-            const breedListItem = document.createElement('li')
-            breedListItem.innerText = singleBreed
-            const breedList = document.getElementById('dog-breeds')
-            breedList.append(breedListItem)
-        }
+function renderBreeds(allBreeds) {
+    for (let breed in allBreeds) {
+        const singleBreed = allBreeds[breed]
+        const breedListItem = document.createElement('li')
+        breedListItem.innerText = singleBreed
+        const breedList = document.getElementById('dog-breeds')
+        breedList.append(breedListItem)
+
+        // challenge 3: when user clicks on li, font color changes
+        breedListItem.addEventListener("click", (e) => e.target.style.color = "purple")
     }
+}
+
+
